@@ -30,3 +30,13 @@ query getQuoteById{
 	by
   }
 }
+
+===========================
+mutation createUser($userNew: UserInput!){
+  user:signUpUserDummy(userNew: $userNew){
+    id
+    email
+    firstName
+    lastName
+  }
+}
