@@ -20,6 +20,7 @@ const server = new ApolloServer({
 
 
 dbConnection.authenticate()
+dbConnection.sync(true);
 // after creating connection we need to import models and than only resolvers
 
 

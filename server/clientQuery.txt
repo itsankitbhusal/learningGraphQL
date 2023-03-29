@@ -40,3 +40,9 @@ mutation createUser($userNew: UserInput!){
     lastName
   }
 }
+
+mutation signInUser($userSignIn: UserSignInInput!){
+  user:signInUser(userSignIn: $userSignIn){
+    token
+  }
+}
