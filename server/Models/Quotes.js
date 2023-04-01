@@ -10,11 +10,9 @@ const Quotes = dbConnection.define('Quotes', {
     by: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-            model: User,
-            key: 'id'
-        }
     }
 })
+
+Quotes.belongsTo(User, { foreignKey: "by" });
 
 export default Quotes;

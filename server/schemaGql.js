@@ -18,6 +18,7 @@ const typeDefs = gql`
     type Quote{
         name: String!
         by: ID!
+        user: User!
     }
     type Token{
         token: String!

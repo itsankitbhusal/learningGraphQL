@@ -14,16 +14,29 @@ const resolvers = {
         users: async () => await User.findAll(),
         user: async (_, { id }) => await User.findOne({ where: { id: id } }),
         quotes: async () => {
-            return await Quotes.findAll();
+            const response = await Quotes.findAll({
+                include: [{
+                    model: User,
+                    attributes: ['email']
+                }]
+            });
+
+            const result = response.map(quote => {
+                const parent = quote.dataValues;
+                const child = parent.User.dataValues;
+                return {
+                    name: parent.name,
+                    by: parent.by,
+                    user: {
+                        email: child.email
+                    }
+                }
+            });
+
+            // console.log(result);
+            return result;
         },
         iquote: async (_, { by }) => await Quotes.findAll({ where: { by } }),
-    },
-    User: {
-        quotes: async (user) => await Quotes.findAll({
-            where: {
-                by: user.id
-            }
-        })
     },
     Mutation: {
         signUpUser: async (_, { userNew }) => {
