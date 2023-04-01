@@ -31,7 +31,7 @@ query getQuoteById{
   }
 }
 
-===========================
++++++++++++++++++++++++++++
 mutation createUser($userNew: UserInput!){
   user:signUpUserDummy(userNew: $userNew){
     id
@@ -41,8 +41,23 @@ mutation createUser($userNew: UserInput!){
   }
 }
 
+++++++++++++++++++++++++++++++++++
+
 mutation signInUser($userSignIn: UserSignInInput!){
   user:signInUser(userSignIn: $userSignIn){
     token
   }
 }
+
+++++++++++++++++++++++++++++
+
+mutation createQuote{
+  createQuote(name: "another quote from developer")
+}
+http header ->{
+  {
+    "authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY4MDMyODczMn0.JyjunHHwQA9M5AooLqLBzv9Z5hZSgzA-MrgVLzDBKAw"
+}
+}
+
+++++++++++++++
