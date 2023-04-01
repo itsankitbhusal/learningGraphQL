@@ -11,20 +11,22 @@ import "./Models/User.js"
 // resolvers
 import resolvers from "./resolves.js"
 
+// middleware
+const context = ({ req }) => {
+    const { authorization } = req.headers;
+    if (authorization) {
+        const { userId } = jwt.verify(authorization, process.env.JWT_SECRET);
+        return { userId };
+    }
 
+};
 
 const server = new ApolloServer({
     typeDefs: typeDefs,
     resolvers: resolvers,
     // middleware
-    context: ({ req }) => {
-        const { authorization } = req.headers;
-        if (authorization) {
-            const { userId } = jwt.verify(authorization, process.env.JWT_SECRET);
-            return { userId };
-        }
+    context: context,
 
-    },
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()]
 })
 

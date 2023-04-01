@@ -11,13 +11,19 @@ import jwt from "jsonwebtoken"
 
 const resolvers = {
     Query: {
-        users: () => users,
-        user: (_, { id }) => users.find(user => user.id == id),
-        quotes: () => quotes,
-        iquote: (_, { by }) => quotes.filter(quote => quote.by == by),
+        users: async () => await User.findAll(),
+        user: async (_, { id }) => await User.findOne({ where: { id: id } }),
+        quotes: async () => {
+            return await Quotes.findAll();
+        },
+        iquote: async (_, { by }) => await Quotes.findAll({ where: { by } }),
     },
     User: {
-        quotes: (ur) => quotes.filter(quote => quote.by == ur.id)
+        quotes: async (user) => await Quotes.findAll({
+            where: {
+                by: user.id
+            }
+        })
     },
     Mutation: {
         signUpUser: async (_, { userNew }) => {
