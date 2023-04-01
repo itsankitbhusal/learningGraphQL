@@ -1,6 +1,7 @@
 import { ApolloServer } from "apollo-server";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core"
 import typeDefs from "./schemaGql.js"
+import jwt from "jsonwebtoken";
 
 import dbConnection from "./Models/db.js"
 
@@ -15,6 +16,15 @@ import resolvers from "./resolves.js"
 const server = new ApolloServer({
     typeDefs: typeDefs,
     resolvers: resolvers,
+    // middleware
+    context: ({ req }) => {
+        const { authorization } = req.headers;
+        if (authorization) {
+            const { userId } = jwt.verify(authorization, process.env.JWT_SECRET);
+            return { userId };
+        }
+
+    },
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()]
 })
 

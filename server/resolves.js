@@ -3,6 +3,7 @@ import { randomBytes } from "crypto"
 import "dotenv/config"
 
 import User from "./Models/User.js"
+import Quotes from "./Models/Quotes.js"
 
 import bcrypt from "bcryptjs"
 
@@ -47,6 +48,17 @@ const resolvers = {
             } else {
                 throw new Error("User doesn't exists");
             }
+        },
+        createQuote: async (_, { name }, { userId }) => {
+            if (!userId) throw new Error("You must be logged in!!");
+            // passed userid from middleware
+
+            await Quotes.create({
+                name,
+                by: userId
+            });
+
+            return "Quotes saved!!"
         }
     }
 }
