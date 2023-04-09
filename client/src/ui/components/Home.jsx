@@ -1,8 +1,36 @@
 import React from "react";
-import { Container, Typography } from "@mui/material";
+import { useEffect } from "react";
+import { Container } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 
 const Home = () => {
+  useEffect(() => {
+    const foo = async () => {
+      const res = await fetch("http://localhost:4000/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "Application/json",
+        },
+        body: JSON.stringify({
+          query: `
+          query{
+            quotes{
+              name
+              by
+              user{
+                email
+              }
+            }
+          }
+        `,
+        }),
+      });
+
+      const data = await res.json();
+      console.log(data);
+    };
+    foo();
+  }, []);
   return (
     <Container>
       <Stack spacing={"1"} sx={{ border: 1, borderRadius: 1 }}>
