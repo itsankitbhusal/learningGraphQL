@@ -1,12 +1,24 @@
+import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
+import { SIGNUP_USER } from "../../gqloperations/mutations";
 
 export const SignUp = () => {
   const [formData, setFormData] = useState({});
 
+  const [signupUser, { data, loading, error }] = useMutation(SIGNUP_USER);
+
+  loading && <h1>Loading ...</h1>;
+  error && <div>{error.message}</div>;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("form submitted!!");
-    console.log(formData);
+    // console.log(formData);
+    signupUser({
+      variables: {
+        userNew: formData,
+      },
+    });
   };
   const handleChange = (e) => {
     setFormData({
@@ -18,6 +30,9 @@ export const SignUp = () => {
   return (
     <>
       <div>
+        {data && data.user && (
+          <div>{data.user.firstName} is registered. You can login now!!</div>
+        )}
         <h3>Sign Up </h3>
         <form onSubmit={handleSubmit}>
           <label htmlFor="firstName">First name</label>
