@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { SIGNUP_USER } from "../../gqloperations/mutations";
 
-export const SignUp = () => {
+const SignUp = () => {
   const [formData, setFormData] = useState({});
 
   const [signupUser, { data, loading, error }] = useMutation(SIGNUP_USER);
@@ -53,3 +53,5 @@ export const SignUp = () => {
     </>
   );
 };
+
+export default SignUp;

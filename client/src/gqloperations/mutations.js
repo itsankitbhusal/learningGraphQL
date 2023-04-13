@@ -5,5 +5,12 @@ mutation createUser($userNew: UserInput!){
       firstName
     }
   }
-  
+`;
+
+export const LOGIN_USER = gql`
+mutation signInUser($userSignIn: UserSignInInput!){
+    user:signInUser(userSignIn: $userSignIn){
+      token
+    }
+  }
 `;

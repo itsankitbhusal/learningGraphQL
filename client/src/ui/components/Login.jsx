@@ -1,7 +1,19 @@
+import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
+import { LOGIN_USER } from "../../gqloperations/mutations";
 
-export const Login = () => {
+const Login = () => {
   const [formData, setFormData] = useState({});
+  const [signInUser, { loading, error, data }] = useMutation(LOGIN_USER, {
+    // you can also do this by checking the data afterwards
+    onCompleted: (data) => {
+      localStorage.setItem("token", data.user.token);
+      console.log("User is logged in: ", data.signInUser);
+    },
+  });
+
+  loading && <h1>Loading ...</h1>;
+  error && <div>{error.message}</div>;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,3 +44,5 @@ export const Login = () => {
     </>
   );
 };
+
+export default Login;

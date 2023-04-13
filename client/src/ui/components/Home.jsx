@@ -8,8 +8,8 @@ const Home = () => {
   const { loading, error, data } = useQuery(GET_ALL_QUOTES);
   data && console.log(data);
 
-  // loading && <h1>Loading ...</h1>;
-  // error && console.log(error.message);
+  loading && <h1>Loading ...</h1>;
+  error && console.log(error.message);
 
   return (
     <Container>
