@@ -1,24 +1,45 @@
 import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { LOGIN_USER } from "../../gqloperations/mutations";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({});
   const [signInUser, { loading, error, data }] = useMutation(LOGIN_USER, {
-    // you can also do this by checking the data afterwards
-    onCompleted: (data) => {
+    onCompleted(data) {
       localStorage.setItem("token", data.user.token);
       console.log("User is logged in: ", data.signInUser);
+      if (localStorage.getItem("token")) {
+        navigate("/");
+      }
     },
   });
 
   loading && <h1>Loading ...</h1>;
   error && <div>{error.message}</div>;
 
+  // this isnot a good way || using onCompleted callback is a good way
+
+  // if (data) {
+  //   localStorage.setItem("token", data.user.token);
+  //   console.log("User is logged in: ", data.signInUser);
+  //   if (localStorage.getItem("token")) {
+  //     navigate("/");
+  //   }
+  // }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("form submitted!!");
     console.log(formData);
+    signInUser({
+      variables: {
+        userSignIn: formData,
+      },
+    });
   };
   const handleChange = (e) => {
     setFormData({
