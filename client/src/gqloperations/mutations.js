@@ -14,3 +14,9 @@ mutation signInUser($userSignIn: UserSignInInput!){
     }
   }
 `;
+
+export const CREATE_QUOTE = gql`
+mutation createQuote($name:String!){
+  createQuote(name: $name)
+}
+`;
