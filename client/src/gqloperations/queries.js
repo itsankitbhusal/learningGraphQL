@@ -9,3 +9,16 @@ query getAllQuotes{
       }
     }
   }`;
+
+export const GET_MY_PROFILE = gql`
+query getMyProfile{
+  user:myProfile{
+    firstName
+    lastName
+    email
+    quotes{
+      name
+    }
+  }
+}
+`;
