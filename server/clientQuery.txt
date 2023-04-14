@@ -31,6 +31,17 @@ query getQuoteById{
   }
 }
 
+query getMyProfile{
+  user:myProfile{
+    firstName
+    lastName
+    email
+    quotes{
+      name
+    }
+  }
+}
+
 +++++++++++++++++++++++++++
 mutation createUser($userNew: UserInput!){
   user:signUpUserDummy(userNew: $userNew){

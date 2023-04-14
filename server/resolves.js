@@ -37,6 +37,13 @@ const resolvers = {
             return result;
         },
         iquote: async (_, { by }) => await Quotes.findAll({ where: { by } }),
+
+        // find user for profile section
+        myProfile: async (_, args, { userId }) => {
+            console.log("\n\n\n\n\nuser id in query def: " + userId)
+            if (!userId) throw new Error("You must be logged in!!");
+            return await User.findOne({ where: { id: userId } });
+        }
     },
     Mutation: {
         signUpUser: async (_, { userNew }) => {
