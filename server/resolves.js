@@ -9,10 +9,11 @@ import bcrypt from "bcryptjs"
 
 import jwt from "jsonwebtoken"
 
+
 const resolvers = {
     Query: {
         users: async () => await User.findAll(),
-        user: async (_, { id }) => await User.findOne({ where: { id: id } }),
+        user: async (_, { id }) => await User.findOne({ where: { id } }),
         quotes: async () => {
             const response = await Quotes.findAll({
                 include: [{
@@ -32,15 +33,12 @@ const resolvers = {
                     }
                 }
             });
-
-            // console.log(result);
             return result;
         },
         iquote: async (_, { by }) => await Quotes.findAll({ where: { by } }),
 
         // find user for profile section
         myProfile: async (_, args, { userId }) => {
-            console.log("\n\n\n\n\nuser id in query def: " + userId)
             if (!userId) throw new Error("You must be logged in!!");
             return await User.findOne({ where: { id: userId } });
         }
